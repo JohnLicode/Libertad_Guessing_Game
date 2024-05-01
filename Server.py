@@ -31,7 +31,6 @@ s.listen(5)
 print(f"Server is listening on port {port}")
 guessme = 0
 conn = None
-leaderboard = {}  # Store total attempts for each client
 
 while True:
     if conn is None:
@@ -46,9 +45,12 @@ while True:
             conn.sendall(b"Invalid difficulty selection. Please enter a valid option.\n" + banner.encode())
             continue
 
-        #Client user name input
+        # Client user name input
         conn.sendall(b"Enter your name: ")
         name = conn.recv(1024).decode().strip()
+
+        # Create a filename based on difficulty level
+        leaderboard_filename = f"leaderboard_{difficulty}.txt"
 
         conn.sendall(b"The game is starting! Hit Enter\n")
         guessme = generate_random_int(difficulty)
@@ -62,13 +64,8 @@ while True:
             if guess == guessme:
                 conn.sendall(b"Correct Answer!")
                 # Update leaderboard
-                if name in leaderboard:
-                    leaderboard[name] += attempt_count
-                else:
-                    leaderboard[name] = attempt_count
-                with open("leaderboard.txt", "w") as leaderboard_file:
-                    for name, attempts in leaderboard.items():
-                        leaderboard_file.write(f"{name}: {attempts} attempts\n")
+                with open(leaderboard_filename, "a") as leaderboard_file:
+                    leaderboard_file.write(f"{name}: {attempt_count} attempts\n")
                 conn.close()
                 conn = None
                 break
