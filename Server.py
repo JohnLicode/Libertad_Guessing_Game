@@ -49,10 +49,16 @@ while True:
             print(f"User guess attempt: {guess}")
             if guess == guessme:
                 conn.sendall(b"Correct Answer!")
+                with open("Lead board attempt.txt", "a") as record_file:
+                    record_file.write(f"User's guess: {guess}, Result: Correct\n")
                 conn.close()
                 conn = None
                 break
             elif guess > guessme:
                 conn.sendall(b"Guess Lower!\nenter guess: ")
+                with open("Lead board attempt.txt", "a") as record_file:
+                    record_file.write(f"User's guess: {guess}, Result: Lower\n")
             elif guess < guessme:
                 conn.sendall(b"Guess Higher!\nenter guess: ")
+                with open("attempt_record.txt", "a") as record_file:
+                    record_file.write(f"User's guess: {guess}, Result: Higher\n")
