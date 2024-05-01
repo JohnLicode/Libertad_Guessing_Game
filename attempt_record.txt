@@ -1,6 +1,0 @@
-User's guess: 1, Result: Higher
-User's guess: 20, Result: Higher
-User's guess: 25, Result: Higher
-User's guess: 30, Result: Higher
-User's guess: 35, Result: Higher
-User's guess: 40, Result: Correct
