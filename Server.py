@@ -49,8 +49,13 @@ while True:
         conn.sendall(b"Enter your name: ")
         name = conn.recv(1024).decode().strip()
 
-        # Create a filename based on difficulty level
-        leaderboard_filename = f"leaderboard_{difficulty}.txt"
+        # Determine leaderboard filename based on difficulty level
+        if difficulty == '1':
+            leaderboard_filename = "leaderboard_easy lvl.txt"
+        elif difficulty == '2':
+            leaderboard_filename = "leaderboard_moderate lvl.txt"
+        else:
+            leaderboard_filename = "leaderboard_hard lvl.txt"
 
         conn.sendall(b"The game is starting! Hit Enter\n")
         guessme = generate_random_int(difficulty)
@@ -63,6 +68,8 @@ while True:
             print(f"User guess attempt: {guess}")
             if guess == guessme:
                 conn.sendall(b"Correct Answer!")
+
+
                 # Update leaderboard
                 with open(leaderboard_filename, "a") as leaderboard_file:
                     leaderboard_file.write(f"{name}: {attempt_count} attempts\n")
@@ -73,3 +80,5 @@ while True:
                 conn.sendall(b"Guess Lower!\nEnter guess: ")
             elif guess < guessme:
                 conn.sendall(b"Guess Higher!\nEnter guess: ")
+
+

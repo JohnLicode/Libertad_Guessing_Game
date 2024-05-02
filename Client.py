@@ -1,6 +1,6 @@
 import socket
 
-host = "192.168.0.108"
+host = "192.168.0.105"
 port = 7777
 
 
